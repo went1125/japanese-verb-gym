@@ -4,7 +4,7 @@ import { Timer, Trophy, Check, X, ArrowRight } from 'lucide-react';
 import { VERB_DATA } from '../data/verbs.js';
 import { MODES } from '../constants/modes.jsx';
 
-export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFavorite }) {
+export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFavorite, selectedLevels }) {
   const [qIndex, setQIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [questions, setQuestions] = useState([]);
@@ -54,9 +54,19 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
     const generated = [];
     const allTargetKeys = MODES.filter(m => m.id !== 'mix').map(m => m.id);
 
+    // --- STEP A: 根據 Level 篩選單字池 ---
+    // verb.level 是 "N5", "N4" 等字串
+    // 如果 selectedLevels 為空或未定義，預設使用 N5 防呆
+    const activeLevels = (selectedLevels && selectedLevels.length > 0) ? selectedLevels : ['N5'];
+    
+    const levelFilteredVerbs = VERB_DATA.filter(v => activeLevels.includes(v.level));
+
+    // 防呆：如果篩選後沒有單字 (例如該等級資料庫還沒建)，則退回到全部
+    const pool = levelFilteredVerbs.length > 0 ? levelFilteredVerbs : VERB_DATA;
+
     // 簡單的隨機選題 (實際專案可改為從 user preferences 讀取權重)
     for (let i = 0; i < qCount; i++) {
-      const verb = VERB_DATA[Math.floor(Math.random() * VERB_DATA.length)];
+      const verb = pool[Math.floor(Math.random() * pool.length)];
       let targetKey = mode.id;
 
       if (mode.id === 'mix') {
@@ -79,7 +89,7 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
       });
     }
     setQuestions(generated);
-  }, [mode, generateDistractors]);
+  }, [mode, generateDistractors, selectedLevels]);
 
   // --- 3. 計時器邏輯 ---
   useEffect(() => {
@@ -106,7 +116,6 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
       // 分數計算：基礎 10 分 + (剩餘秒數 * 2)
       setScore(prev => prev + 10 + Math.ceil(timeLeft * 2));
     }
-    // 移除 setTimeout，改為等待用戶點擊按鈕
   };
 
   // --- 5. 下一題/結算處理 ---
@@ -126,7 +135,7 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
   // 載入中狀態
   if (questions.length === 0) return (
     <div className="flex items-center justify-center h-full text-slate-400">
-      載入題目中...
+      <p className="animate-pulse">正在準備 {selectedLevels?.join(', ')} 程度的題目...</p>
     </div>
   );
 
