@@ -1,6 +1,6 @@
 // src/constants/modes.jsx
 import React from 'react';
-import { Check, RotateCcw, X, Timer, Zap } from 'lucide-react';
+import { Check, RotateCcw, X, Timer, Zap, Lightbulb, Users } from 'lucide-react';
 
 // 精確匯出：MODES 設定檔
 export const MODES = [
@@ -31,6 +31,21 @@ export const MODES = [
     color: 'from-emerald-500 to-teal-400', 
     desc: 'Endurance: 過去發生的事',
     icon: <Timer size={20} className="text-white"/>
+  },
+    // --- 付費進階模式 ---
+  { 
+    id: 'potential', 
+    label: '可能形 (能力)', 
+    color: 'from-pink-500 to-rose-400', 
+    desc: 'Ability: 能做什麼 (Pro)',
+    icon: <Lightbulb size={20} className="text-white"/>,
+  },
+  { 
+    id: 'volitional', 
+    label: '意向形 (意志)', 
+    color: 'from-cyan-500 to-blue-500', 
+    desc: 'Intent: 邀請與意志 (Pro)',
+    icon: <Users size={20} className="text-white"/>,
   },
   { 
     id: 'mix', 
