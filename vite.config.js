@@ -8,17 +8,20 @@ export default defineConfig({
     VitePWA({ 
       registerType: 'autoUpdate',
       manifest: {
-        name: 'Verb Gym',
-        short_name: 'VerbGym',
-        theme_color: '#0f172a', // bg-slate-900
+        name: 'Doushi Gym: Japanese Workout',
+        short_name: 'Doushi Gym',
+        description: '日文動詞與文法肌肉記憶訓練',
+        theme_color: '#0f172a',
+        background_color: '#0f172a',
+        display: 'standalone',
         icons: [
             {
-                src: 'vite.svg', // 之後要換成你的 192x192 icon
+                src: 'tango_gym.png', // 之後要換成你的 192x192 icon
                 sizes: '192x192',
                 type: 'image/svg+xml'
             },
             {
-                src: 'vite.svg', // 之後要換成 512x512
+                src: 'tango_gym.png', // 之後要換成 512x512
                 sizes: '512x512',
                 type: 'image/svg+xml'
             }

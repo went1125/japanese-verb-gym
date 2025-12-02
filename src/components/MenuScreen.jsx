@@ -25,7 +25,7 @@ export default function MenuScreen({
         <div>
           <h1 className="text-3xl font-black tracking-tighter italic flex items-center gap-2">
             <Dumbbell className="text-indigo-500 fill-indigo-500" />
-            VERB GYM
+            Doushi Gym
           </h1>
           <p className="text-slate-500 text-sm font-medium pl-1">Daily Workout</p>
         </div>
