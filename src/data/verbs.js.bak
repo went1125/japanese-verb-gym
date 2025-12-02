@@ -1,4 +1,4 @@
-﻿// src/data/verbs.js
+// src/data/verbs.js
 
 export const VERB_DATA = [
   // --- N5 ---
@@ -3245,7 +3245,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '考慮する', sentence: '提案[ていあん]を考慮[こうりょ]する。', trans: '考慮提案。' },
+      dictionary: { word: '考慮する', sentence: '提案[ていあん]を**考慮**[こうりょ]する。', trans: '考慮提案。' },
       masu: { word: '考慮します', sentence: '時間[じかん]を考慮[こうりょ]します。', trans: '考慮時間。' },
       te: { word: '考慮して', sentence: '様々[さまざま]な要因[よういん]を考慮[こうりょ]して。', trans: '考慮了各種因素。' },
       nai: { word: '考慮しない', sentence: '（不常用）', trans: '（不考慮）' },
@@ -3262,7 +3262,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '評価する', sentence: '努力[どりょく]を評価[ひょうか]する。', trans: '評價努力。' },
+      dictionary: { word: '評価する', sentence: '努力[どりょく]を**評価**[ひょうか]する。', trans: '評價努力。' },
       masu: { word: '評価します', sentence: '彼[かれ]の仕事[しごと]を評価[ひょうか]します。', trans: '評價他的工作。' },
       te: { word: '評価して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '評価しない', sentence: '（不常用）', trans: '（不評價）' },
@@ -3279,7 +3279,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '支援する', sentence: '被災地[ひさいち]を支援[しえん]する。', trans: '支援災區。' },
+      dictionary: { word: '支援する', sentence: '被災地[ひさいち]を**支援**[しえん]する。', trans: '支援災區。' },
       masu: { word: '支援します', sentence: '彼[かれ]の活動[かつどう]を支援[しえん]します。', trans: '支援他的活動。' },
       te: { word: '支援して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '支援しない', sentence: '（不常用）', trans: '（不支援）' },
@@ -3296,7 +3296,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '狙う', sentence: 'チャンス[チャンス]を狙[ねら]う。', trans: '伺機（瞄準機會）。' },
+      dictionary: { word: '狙う', sentence: 'チャンス[チャンス]を**狙**[ねら]う。', trans: '伺機（瞄準機會）。' },
       masu: { word: '狙います', sentence: '頂上[ちょうじょう]を狙[ねら]います。', trans: '瞄準頂峰。' },
       te: { word: '狙って', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '狙わない', sentence: '（不常用）', trans: '（不瞄準）' },
@@ -3313,7 +3313,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '受け入れる', sentence: '批判[ひはん]を受[う]け入[い]れる。', trans: '接受批判。' },
+      dictionary: { word: '受け入れる', sentence: '批判[ひはん]を**受**[う]け**入**[い]れる。', trans: '接受批判。' },
       masu: { word: '受け入れます', sentence: '提案[ていあん]を受[う]け入[い]れます。', trans: '接受提案。' },
       te: { word: '受け入れて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '受け入れない', sentence: '（不常用）', trans: '（不接受）' },
@@ -3330,7 +3330,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '開発する', sentence: '新[しん]製品[せいひん]を開発[かいはつ]する。', trans: '開發新產品。' },
+      dictionary: { word: '開発する', sentence: '新[しん]製品[せいひん]を**開発**[かいはつ]する。', trans: '開發新產品。' },
       masu: { word: '開発します', sentence: '新[あたら]しいシステムを開発[かいはつ]します。', trans: '開發新系統。' },
       te: { word: '開発して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '開発しない', sentence: '（不常用）', trans: '（不開發）' },
@@ -3347,7 +3347,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '頼る', sentence: '親[おや]に頼[たよ]る。', trans: '依靠父母。' },
+      dictionary: { word: '頼る', sentence: '親[おや]に**頼**[たよ]る。', trans: '依靠父母。' },
       masu: { word: '頼ります', sentence: '彼[かれ]の力[ちから]を頼[たよ]ります。', trans: '信賴他的力量。' },
       te: { word: '頼って', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '頼らない', sentence: '（不常用）', trans: '（不依靠）' },
@@ -3364,7 +3364,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '配る', sentence: 'チラシ[チラシ]を配[くば]る。', trans: '分發傳單。' },
+      dictionary: { word: '配る', sentence: 'チラシ[チラシ]を**配**[くば]る。', trans: '分發傳單。' },
       masu: { word: '配ります', sentence: '参加者[さんかしゃ]に資料[しりょう]を配[くば]ります。', trans: '向參加者分發資料。' },
       te: { word: '配って', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '配らない', sentence: '（不常用）', trans: '（不分發）' },
@@ -3381,7 +3381,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '依頼する', sentence: '彼[かれ]に仕事[しごと]を依頼[いらい]する。', trans: '委託他工作。' },
+      dictionary: { word: '依頼する', sentence: '彼[かれ]に仕事[しごと]を**依頼**[いらい]する。', trans: '委託他工作。' },
       masu: { word: '依頼します', sentence: '（不常用）', trans: '（委託）' },
       te: { word: '依頼して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '依頼しない', sentence: '（不常用）', trans: '（不委託）' },
@@ -3398,7 +3398,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '見込む', sentence: '利益[りえき]を見[み]込[こ]む。', trans: '預計利潤。' },
+      dictionary: { word: '見込む', sentence: '利益[りえき]を**見**[み]**込**[こ]む。', trans: '預計利潤。' },
       masu: { word: '見込みます', sentence: '（不常用）', trans: '（預計）' },
       te: { word: '見込んで', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '見込まない', sentence: '（不常用）', trans: '（不預計）' },
@@ -3415,7 +3415,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '運営する', sentence: 'サイト[サイト]を運営[うんえい]する。', trans: '營運網站。' },
+      dictionary: { word: '運営する', sentence: 'サイト[サイト]を**運営**[うんえい]する。', trans: '營運網站。' },
       masu: { word: '運営します', sentence: '会社[かいしゃ]を運営[うんえい]します。', trans: '經營公司。' },
       te: { word: '運営して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '運営しない', sentence: '（不常用）', trans: '（不營運）' },
@@ -3432,13 +3432,47 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '獲得する', sentence: '資格[しかく]を獲得[かくとく]する。', trans: '獲得資格。' },
+      dictionary: { word: '獲得する', sentence: '資格[しかく]を**獲得**[かくとく]する。', trans: '獲得資格。' },
       masu: { word: '獲得します', sentence: '（不常用）', trans: '（獲得）' },
       te: { word: '獲得して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '獲得しない', sentence: '（不常用）', trans: '（不獲得）' },
       ta: { word: '獲得した', sentence: '彼[かれ]は優勝[ゆうしょう]を獲得[かくとく]した。', trans: '他獲得了冠軍。' },
       potential: { word: '獲得できる', sentence: '（不常用）', trans: '（能獲得）' },
       volitional: { word: '獲得しよう', sentence: '（不常用）', trans: '（獲得吧）' }
+    }
+  },
+  {
+    id: 'judge',
+    kanji: '判断する',
+    hiragana: 'はんだんする',
+    meaning: '判斷（N2複習，強調決策能力）',
+    group: 'Irregular (不規則)',
+    level: 'N2',
+    forms: {
+      dictionary: { word: '判断する', sentence: '（N2第一批已解釋，略）', trans: '判斷。' },
+      masu: { word: '判断します', sentence: '（N2第一批已解釋，略）', trans: '（判斷）' },
+      te: { word: '判断して', sentence: '（N2第一批已解釋，略）', trans: '（判斷後）' },
+      nai: { word: '判断しない', sentence: '（N2第一批已解釋，略）', trans: '（不判斷）' },
+      ta: { word: '判断した', sentence: '（N2第一批已解釋，略）', trans: '（判斷了）' },
+      potential: { word: '判断できる', sentence: '（N2第一批已解釋，略）', trans: '（能判斷）' },
+      volitional: { word: '判断しよう', sentence: '（不常用）', trans: '（不常用）' }
+    }
+  },
+  {
+    id: 'propose_idea',
+    kanji: '提案する',
+    hiragana: 'ていあんする',
+    meaning: '提案（N2複習，強調提供解決方案）',
+    group: 'Irregular (不規則)',
+    level: 'N2',
+    forms: {
+      dictionary: { word: '提案する', sentence: '（N2第一批已解釋，略）', trans: '提案。' },
+      masu: { word: '提案します', sentence: '（N2第一批已解釋，略）', trans: '（提案）' },
+      te: { word: '提案して', sentence: '（N2第一批已解釋，略）', trans: '（提案後）' },
+      nai: { word: '提案しない', sentence: '（N2第一批已解釋，略）', trans: '（不提案）' },
+      ta: { word: '提案した', sentence: '（N2第一批已解釋，略）', trans: '（提案了）' },
+      potential: { word: '提案できる', sentence: '（N2第一批已解釋，略）', trans: '（能提案）' },
+      volitional: { word: '提案しよう', sentence: '（不常用）', trans: '（不常用）' }
     }
   },
   {
@@ -3449,7 +3483,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '尋ねる', sentence: '専門家[せんもんか]に尋[たず]ねる。', trans: '詢問專家。' },
+      dictionary: { word: '尋ねる', sentence: '専門家[せんもんか]に**尋**[たず]ねる。', trans: '詢問專家。' },
       masu: { word: '尋ねます', sentence: '詳[くわ]しい話[はなし]を尋[たず]ねます。', trans: '詢問詳細情況。' },
       te: { word: '尋ねて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '尋ねない', sentence: '（不常用）', trans: '（不詢問）' },
@@ -3466,7 +3500,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '達成する', sentence: '目標[もくひょう]を達成[たっせい]する。', trans: '達成目標。' },
+      dictionary: { word: '達成する', sentence: '目標[もくひょう]を**達成**[たっせい]する。', trans: '達成目標。' },
       masu: { word: '達成します', sentence: '必[かなら]ず達成[たっせい]します。', trans: '一定會達成。' },
       te: { word: '達成して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '達成しない', sentence: '（不常用）', trans: '（不達成）' },
@@ -3483,7 +3517,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '報告する', sentence: '状況[じょうきょう]を報告[ほうこく]する。', trans: '報告情況。' },
+      dictionary: { word: '報告する', sentence: '状況[じょうきょう]を**報告**[ほうこく]する。', trans: '報告情況。' },
       masu: { word: '報告します', sentence: '結果[けっか]を報告[ほうこく]します。', trans: '報告結果。' },
       te: { word: '報告して', sentence: '（不常用）', trans: '（請報告）' },
       nai: { word: '報告しない', sentence: '（不常用）', trans: '（不報告）' },
@@ -3500,7 +3534,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N2',
     forms: {
-      dictionary: { word: '定める', sentence: '目標[もくひょう]を定[さだ]める。', trans: '制定目標。' },
+      dictionary: { word: '定める', sentence: '目標[もくひょう]を**定**[さだ]める。', trans: '制定目標。' },
       masu: { word: '定めます', sentence: '規則[きそく]を定[さだ]めます。', trans: '規定規則。' },
       te: { word: '定めて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '定ない', sentence: '（不常用）', trans: '（不規定）' },
@@ -3517,7 +3551,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '参照する', sentence: '資料[しりょう]を参照[さんしょう]する。', trans: '參照資料。' },
+      dictionary: { word: '参照する', sentence: '資料[しりょう]を**参照**[さんしょう]する。', trans: '參照資料。' },
       masu: { word: '参照します', sentence: '（不常用）', trans: '（參照）' },
       te: { word: '参照して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '参照しない', sentence: '（不常用）', trans: '（不參照）' },
@@ -3534,7 +3568,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '対処する', sentence: '問題[もんだい]に対処[たいしょ]する。', trans: '應對問題。' },
+      dictionary: { word: '対処する', sentence: '問題[もんだい]に**対処**[たいしょ]する。', trans: '應對問題。' },
       masu: { word: '対処します', sentence: '迅速[じんそく]に対処[たいしょ]します。', trans: '迅速應對。' },
       te: { word: '対処して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '対処しない', sentence: '（不常用）', trans: '（不應對）' },
@@ -3551,7 +3585,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N2',
     forms: {
-      dictionary: { word: '証明する', sentence: '真実[しんじつ]を証明[しょうめい]する。', trans: '證明真相。' },
+      dictionary: { word: '証明する', sentence: '真実[しんじつ]を**証明**[しょうめい]する。', trans: '證明真相。' },
       masu: { word: '証明します', sentence: '私[わたし]が証明[しょうめい]します。', trans: '我來證明。' },
       te: { word: '証明して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '証明しない', sentence: '（不常用）', trans: '（不證明）' },
@@ -3568,7 +3602,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '奨励する', sentence: '読書[どくしょ]を奨励[しょうれい]する。', trans: '鼓勵閱讀。' },
+      dictionary: { word: '奨励する', sentence: '読書[どくしょ]を**奨励**[しょうれい]する。', trans: '鼓勵閱讀。' },
       masu: { word: '奨励します', sentence: '（不常用）', trans: '（獎勵）' },
       te: { word: '奨励して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '奨励しない', sentence: '（不常用）', trans: '（不獎勵）' },
@@ -3585,7 +3619,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '乗り越える', sentence: '困難[こんなん]を乗[の]り越[こ]える。', trans: '克服困難。' },
+      dictionary: { word: '乗り越える', sentence: '困難[こんなん]を**乗**[の]り**越**[こ]える。', trans: '克服困難。' },
       masu: { word: '乗り越えます', sentence: '試練[しれん]を乗[の]り越[こ]えます。', trans: '跨越考驗。' },
       te: { word: '乗り越えて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '乗り越えない', sentence: '（不常用）', trans: '（不克服）' },
@@ -3602,7 +3636,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '強調する', sentence: '重要性[じゅうようせい]を強調[きょうちょう]する。', trans: '強調重要性。' },
+      dictionary: { word: '強調する', sentence: '重要性[じゅうようせい]を**強調**[きょうちょう]する。', trans: '強調重要性。' },
       masu: { word: '強調します', sentence: '（不常用）', trans: '（強調）' },
       te: { word: '強調して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '強調しない', sentence: '（不常用）', trans: '（不強調）' },
@@ -3619,7 +3653,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '貢献する', sentence: '社会[しゃかい]に貢献[こうけん]する。', trans: '為社會貢獻。' },
+      dictionary: { word: '貢献する', sentence: '社会[しゃかい]に**貢献**[こうけん]する。', trans: '為社會貢獻。' },
       masu: { word: '貢献します', sentence: '（不常用）', trans: '（貢獻）' },
       te: { word: '貢献して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '貢献しない', sentence: '（不常用）', trans: '（不貢獻）' },
@@ -3636,7 +3670,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '排除する', sentence: '敵[てき]を排除[はいじょ]する。', trans: '排除敵人。' },
+      dictionary: { word: '排除する', sentence: '敵[てき]を**排除**[はいじょ]する。', trans: '排除敵人。' },
       masu: { word: '排除します', sentence: '（不常用）', trans: '（排除）' },
       te: { word: '排除して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '排除しない', sentence: '（不常用）', trans: '（不排除）' },
@@ -3653,7 +3687,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '追及する', sentence: '責任[せきにん]を追及[ついきゅう]する。', trans: '追究責任。' },
+      dictionary: { word: '追及する', sentence: '責任[せきにん]を**追及**[ついきゅう]する。', trans: '追究責任。' },
       masu: { word: '追及します', sentence: '（不常用）', trans: '（追究）' },
       te: { word: '追及して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '追及しない', sentence: '（不常用）', trans: '（不追究）' },
@@ -3670,7 +3704,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '同行する', sentence: '彼[かれ]に同行[どうこう]する。', trans: '與他同行。' },
+      dictionary: { word: '同行する', sentence: '彼[かれ]に**同行**[どうこう]する。', trans: '與他同行。' },
       masu: { word: '同行します', sentence: '（不常用）', trans: '（同行）' },
       te: { word: '同行して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '同行しない', sentence: '（不常用）', trans: '（不同行）' },
@@ -3687,7 +3721,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '禁止する', sentence: '喫煙[きつえん]を禁止[きんし]する。', trans: '禁止吸煙。' },
+      dictionary: { word: '禁止する', sentence: '喫煙[きつえん]を**禁止**[きんし]する。', trans: '禁止吸煙。' },
       masu: { word: '禁止します', sentence: '（不常用）', trans: '（禁止）' },
       te: { word: '禁止して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '禁止しない', sentence: '（不常用）', trans: '（不禁止）' },
@@ -3704,7 +3738,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '携わる', sentence: '教育[きょういく]に携[たずさ]わる。', trans: '從事教育。' },
+      dictionary: { word: '携わる', sentence: '教育[きょういく]に**携**[たずさ]わる。', trans: '從事教育。' },
       masu: { word: '携わります', sentence: '（不常用）', trans: '（從事）' },
       te: { word: '携わって', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '携わらない', sentence: '（不常用）', trans: '（不從事）' },
@@ -3721,7 +3755,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '除去する', sentence: '汚れ[よごれ]を除去[じょきょ]する。', trans: '除去污垢。' },
+      dictionary: { word: '除去する', sentence: '汚れ[よごれ]を**除去**[じょきょ]する。', trans: '除去污垢。' },
       masu: { word: '除去します', sentence: '（不常用）', trans: '（除去）' },
       te: { word: '除去して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '除去しない', sentence: '（不常用）', trans: '（不除去）' },
@@ -3738,7 +3772,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '及ぼす', sentence: '影響[えいきょう]を及[およ]ぼす。', trans: '施加影響。' },
+      dictionary: { word: '及ぼす', sentence: '影響[えいきょう]を**及**[およ]ぼす。', trans: '施加影響。' },
       masu: { word: '及ぼします', sentence: '（不常用）', trans: '（施加）' },
       te: { word: '及ぼして', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '及ぼさない', sentence: '（不常用）', trans: '（不施加）' },
@@ -3755,7 +3789,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '継ぐ', sentence: '家業[かぎょう]を継[つ]ぐ。', trans: '繼承家業。' },
+      dictionary: { word: '継ぐ', sentence: '家業[かぎょう]を**継**[つ]ぐ。', trans: '繼承家業。' },
       masu: { word: '継ぎます', sentence: '（不常用）', trans: '（繼承）' },
       te: { word: '継いで', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '継がない', sentence: '（不常用）', trans: '（不繼承）' },
@@ -3772,7 +3806,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '連携する', sentence: '他[た]社[しゃ]と連携[れんけい]する。', trans: '與其他公司合作。' },
+      dictionary: { word: '連携する', sentence: '他[た]社[しゃ]と**連携**[れんけい]する。', trans: '與其他公司合作。' },
       masu: { word: '連携します', sentence: '（不常用）', trans: '（合作）' },
       te: { word: '連携して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '連携しない', sentence: '（不常用）', trans: '（不合作）' },
@@ -3789,7 +3823,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '複雑になる', sentence: '話[はなし]が複雑[ふくざつ]になる。', trans: '事情變複雜。' },
+      dictionary: { word: '複雑になる', sentence: '話[はなし]が**複雑**[ふくざつ]になる。', trans: '事情變複雜。' },
       masu: { word: '複雑になります', sentence: '（不常用）', trans: '（會變複雜）' },
       te: { word: '複雑になって', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '複雑にならない', sentence: '（不常用）', trans: '（不變複雜）' },
@@ -3806,7 +3840,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '遵守する', sentence: '規則[きそく]を遵守[じゅんしゅ]する。', trans: '遵守規則。' },
+      dictionary: { word: '遵守する', sentence: '規則[きそく]を**遵守**[じゅんしゅ]する。', trans: '遵守規則。' },
       masu: { word: '遵守します', sentence: '（不常用）', trans: '（遵守）' },
       te: { word: '遵守して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '遵守しない', sentence: '（不常用）', trans: '（不遵守）' },
@@ -3823,7 +3857,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '実証する', sentence: '理論[りろん]を実証[じっしょう]する。', trans: '實證理論。' },
+      dictionary: { word: '実証する', sentence: '理論[りろん]を**実証**[じっしょう]する。', trans: '實證理論。' },
       masu: { word: '実証します', sentence: '（不常用）', trans: '（實證）' },
       te: { word: '実証して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '実証しない', sentence: '（不常用）', trans: '（不實證）' },
@@ -3840,7 +3874,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '交渉する', sentence: '条件[じょうけん]を交渉[こうしょう]する。', trans: '談判條件。' },
+      dictionary: { word: '交渉する', sentence: '条件[じょうけん]を**交渉**[こうしょう]する。', trans: '談判條件。' },
       masu: { word: '交渉します', sentence: '（不常用）', trans: '（交涉）' },
       te: { word: '交渉して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '交渉しない', sentence: '（不常用）', trans: '（不交涉）' },
@@ -3857,7 +3891,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '保証する', sentence: '品質[ひんしつ]を保証[ほしょう]する。', trans: '保證品質。' },
+      dictionary: { word: '保証する', sentence: '品質[ひんしつ]を**保証**[ほしょう]する。', trans: '保證品質。' },
       masu: { word: '保証します', sentence: '（不常用）', trans: '（保證）' },
       te: { word: '保証して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '保証しない', sentence: '（不常用）', trans: '（不保證）' },
@@ -3874,7 +3908,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '推測する', sentence: '原因[げんいん]を推測[すいそく]する。', trans: '推測原因。' },
+      dictionary: { word: '推測する', sentence: '原因[げんいん]を**推測**[すいそく]する。', trans: '推測原因。' },
       masu: { word: '推測します', sentence: '（不常用）', trans: '（推測）' },
       te: { word: '推測して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '推測しない', sentence: '（不常用）', trans: '（不推測）' },
@@ -3891,7 +3925,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '見落とす', sentence: '重要[じゅうよう]な点[てん]を見[み]落[お]とす。', trans: '看漏重點。' },
+      dictionary: { word: '見落とす', sentence: '重要[じゅうよう]な点[てん]を**見**[み]**落**[お]とす。', trans: '看漏重點。' },
       masu: { word: '見落とします', sentence: '（不常用）', trans: '（看漏）' },
       te: { word: '見落として', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '見落とさない', sentence: '（不常用）', trans: '（不看漏）' },
@@ -3908,7 +3942,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '反映する', sentence: '意見[いけん]を反映[はんえい]する。', trans: '反映意見。' },
+      dictionary: { word: '反映する', sentence: '意見[いけん]を**反映**[はんえい]する。', trans: '反映意見。' },
       masu: { word: '反映します', sentence: '（不常用）', trans: '（反映）' },
       te: { word: '反映して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '反映しない', sentence: '（不常用）', trans: '（不反映）' },
@@ -3925,7 +3959,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '乗り切る', sentence: '危機[きき]を乗[の]り切[き]る。', trans: '度過危機。' },
+      dictionary: { word: '乗り切る', sentence: '危機[きき]を**乗**[の]り**切**[き]る。', trans: '度過危機。' },
       masu: { word: '乗り切ります', sentence: '（不常用）', trans: '（度過）' },
       te: { word: '乗り切って', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '乗り切らない', sentence: '（不常用）', trans: '（不度過）' },
@@ -3942,7 +3976,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '任命する', sentence: '彼[かれ]を任命[にんめい]する。', trans: '任命他。' },
+      dictionary: { word: '任命する', sentence: '彼[かれ]を**任命**[にんめい]する。', trans: '任命他。' },
       masu: { word: '任命します', sentence: '（不常用）', trans: '（任命）' },
       te: { word: '任命して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '任命しない', sentence: '（不常用）', trans: '（不任命）' },
@@ -3959,7 +3993,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '改革する', sentence: '制度[せいど]を改革[かいかく]する。', trans: '改革制度。' },
+      dictionary: { word: '改革する', sentence: '制度[せいど]を**改革**[かいかく]する。', trans: '改革制度。' },
       masu: { word: '改革します', sentence: '（不常用）', trans: '（改革）' },
       te: { word: '改革して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '改革しない', sentence: '（不常用）', trans: '（不改革）' },
@@ -3976,7 +4010,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '担う', sentence: '責任[せきにん]を担[にな]う。', trans: '承擔責任。' },
+      dictionary: { word: '担う', sentence: '責任[せきにん]を**担**[にな]う。', trans: '承擔責任。' },
       masu: { word: '担います', sentence: '（不常用）', trans: '（承擔）' },
       te: { word: '担って', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '担わない', sentence: '（不常用）', trans: '（不承擔）' },
@@ -3993,7 +4027,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '見積もる', sentence: '費用[ひよう]を見[み]積[つ]もる。', trans: '估計費用。' },
+      dictionary: { word: '見積もる', sentence: '費用[ひよう]を**見**[み]**積**[つ]もる。', trans: '估計費用。' },
       masu: { word: '見積もります', sentence: '（不常用）', trans: '（估計）' },
       te: { word: '見積もって', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '見積もらない', sentence: '（不常用）', trans: '（不估計）' },
@@ -4010,7 +4044,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '追求する', sentence: '理想[りそう]を追求[ついきゅう]する。', trans: '追求理想。' },
+      dictionary: { word: '追求する', sentence: '理想[りそう]を**追求**[ついきゅう]する。', trans: '追求理想。' },
       masu: { word: '追求します', sentence: '（不常用）', trans: '（追求）' },
       te: { word: '追求して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '追求しない', sentence: '（不常用）', trans: '（不追求）' },
@@ -4027,7 +4061,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '結論づける', sentence: '原因[げんいん]を結論[けつろん]づける。', trans: '對原因做出結論。' },
+      dictionary: { word: '結論づける', sentence: '原因[げんいん]を**結論**[けつろん]づける。', trans: '對原因做出結論。' },
       masu: { word: '結論づけます', sentence: '（不常用）', trans: '（做出結論）' },
       te: { word: '結論づけて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '結論づけない', sentence: '（不常用）', trans: '（不做出結論）' },
@@ -4044,7 +4078,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '拡大する', sentence: '写真[しゃしん]を拡大[かくだい]する。', trans: '放大照片。' },
+      dictionary: { word: '拡大する', sentence: '写真[しゃしん]を**拡大**[かくだい]する。', trans: '放大照片。' },
       masu: { word: '拡大します', sentence: '（不常用）', trans: '（擴大）' },
       te: { word: '拡大して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '拡大しない', sentence: '（不常用）', trans: '（不擴大）' },
@@ -4061,13 +4095,30 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '復元する', sentence: 'データ[データ]を復元[ふくげん]する。', trans: '復原數據。' },
+      dictionary: { word: '復元する', sentence: 'データ[データ]を**復元**[ふくげん]する。', trans: '復原數據。' },
       masu: { word: '復元します', sentence: '（不常用）', trans: '（復原）' },
       te: { word: '復元して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '復元しない', sentence: '（不常用）', trans: '（不復原）' },
       ta: { word: '復元した', sentence: '彼[かれ]は古[ふる]い建物[たてもの]を復元[ふくげん]した。', trans: '他復原了古老的建築。' },
       potential: { word: '復元できる', sentence: '（不常用）', trans: '（能復原）' },
       volitional: { word: '復元しよう', sentence: '（不常用）', trans: '（復原吧）' }
+    }
+  },
+  {
+    id: 'suspect',
+    kanji: '疑う',
+    hiragana: 'うたがう',
+    meaning: '懷疑（N2複習，強調理性懷疑）',
+    group: 'U-Verb (一類)',
+    level: 'N1',
+    forms: {
+      dictionary: { word: '疑う', sentence: '（N2已解釋，略）', trans: '懷疑。' },
+      masu: { word: '疑います', sentence: '（N2已解釋，略）', trans: '（懷疑）' },
+      te: { word: '疑って', sentence: '（N2已解釋，略）', trans: '（不常用）' },
+      nai: { word: '疑わない', sentence: '（N2已解釋，略）', trans: '（不懷疑）' },
+      ta: { word: '疑った', sentence: '（N2已解釋，略）', trans: '（懷疑了）' },
+      potential: { word: '疑える', sentence: '（N2已解釋，略）', trans: '（能懷疑）' },
+      volitional: { word: '疑おう', sentence: '（不常用）', trans: '（不常用）' }
     }
   },
   {
@@ -4078,7 +4129,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '従事する', sentence: '研究[けんきゅう]に従事[じゅうじ]する。', trans: '從事研究。' },
+      dictionary: { word: '従事する', sentence: '研究[けんきゅう]に**従事**[じゅうじ]する。', trans: '從事研究。' },
       masu: { word: '従事します', sentence: '（不常用）', trans: '（從事）' },
       te: { word: '従事して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '従事しない', sentence: '（不常用）', trans: '（不從事）' },
@@ -4095,7 +4146,7 @@ export const VERB_DATA = [
     group: 'U-Verb (一類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '関わる', sentence: '彼[かれ]は事件[じけん]に関[かか]わる。', trans: '他與事件有關。' },
+      dictionary: { word: '関わる', sentence: '彼[かれ]は事件[じけん]に**関**[かか]わる。', trans: '他與事件有關。' },
       masu: { word: '関わります', sentence: '（不常用）', trans: '（牽涉）' },
       te: { word: '関わって', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '関わらない', sentence: '（不常用）', trans: '（不牽涉）' },
@@ -4112,7 +4163,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '禁じる', sentence: '出入[でいり]を禁[きん]じる。', trans: '禁止出入。' },
+      dictionary: { word: '禁じる', sentence: '出入[でいり]を**禁**[きん]じる。', trans: '禁止出入。' },
       masu: { word: '禁じます', sentence: '（不常用）', trans: '（禁止）' },
       te: { word: '禁じて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '禁じない', sentence: '（不常用）', trans: '（不禁止）' },
@@ -4129,7 +4180,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '中断する', sentence: '会議[かいぎ]を中断[ちゅうだん]する。', trans: '中斷會議。' },
+      dictionary: { word: '中断する', sentence: '会議[かいぎ]を**中断**[ちゅうだん]する。', trans: '中斷會議。' },
       masu: { word: '中断します', sentence: '（不常用）', trans: '（中斷）' },
       te: { word: '中断して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '中断しない', sentence: '（不常用）', trans: '（不中斷）' },
@@ -4146,7 +4197,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '想定する', sentence: '最悪[さいあく]の事態[じたい]を想定[そうてい]する。', trans: '假定最壞的情況。' },
+      dictionary: { word: '想定する', sentence: '最悪[さいあく]の事態[じたい]を**想定**[そうてい]する。', trans: '假定最壞的情況。' },
       masu: { word: '想定します', sentence: '（不常用）', trans: '（想定）' },
       te: { word: '想定して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '想定しない', sentence: '（不常用）', trans: '（不想定）' },
@@ -4163,7 +4214,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '検証する', sentence: '効果[こうか]を検証[けんしょう]する。', trans: '驗證效果。' },
+      dictionary: { word: '検証する', sentence: '効果[こうか]を**検証**[けんしょう]する。', trans: '驗證效果。' },
       masu: { word: '検証します', sentence: '（不常用）', trans: '（驗證）' },
       te: { word: '検証して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '検証しない', sentence: '（不常用）', trans: '（不驗證）' },
@@ -4180,7 +4231,7 @@ export const VERB_DATA = [
     group: 'Ru-Verb (二類)',
     level: 'N1',
     forms: {
-      dictionary: { word: '捧げる', sentence: '人生[じんせい]を捧[ささ]げる。', trans: '奉獻一生。' },
+      dictionary: { word: '捧げる', sentence: '人生[じんせい]を**捧**[ささ]げる。', trans: '奉獻一生。' },
       masu: { word: '捧げます', sentence: '（不常用）', trans: '（奉獻）' },
       te: { word: '捧げて', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '捧げない', sentence: '（不常用）', trans: '（不奉獻）' },
@@ -4197,7 +4248,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '却下する', sentence: '提案[ていあん]を却下[きゃっか]する。', trans: '駁回提案。' },
+      dictionary: { word: '却下する', sentence: '提案[ていあん]を**却下**[きゃっか]する。', trans: '駁回提案。' },
       masu: { word: '却下します', sentence: '（不常用）', trans: '（駁回）' },
       te: { word: '却下して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '却下しない', sentence: '（不常用）', trans: '（不駁回）' },
@@ -4214,7 +4265,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '妥協する', sentence: '意見[いけん]を妥協[だきょう]する。', trans: '意見妥協。' },
+      dictionary: { word: '妥協する', sentence: '意見[いけん]を**妥協**[だきょう]する。', trans: '意見妥協。' },
       masu: { word: '妥協します', sentence: '（不常用）', trans: '（妥協）' },
       te: { word: '妥協して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '妥協しない', sentence: '（不常用）', trans: '（不妥協）' },
@@ -4231,7 +4282,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '逆転する', sentence: '試合[しあい]が逆転[ぎゃくてん]する。', trans: '比賽逆轉。' },
+      dictionary: { word: '逆転する', sentence: '試合[しあい]が**逆転**[ぎゃくてん]する。', trans: '比賽逆轉。' },
       masu: { word: '逆転します', sentence: '（不常用）', trans: '（逆轉）' },
       te: { word: '逆転して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '逆転しない', sentence: '（不常用）', trans: '（不逆轉）' },
@@ -4248,7 +4299,7 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '撤回する', sentence: '発言[はつげん]を撤回[てっかい]する。', trans: '撤回發言。' },
+      dictionary: { word: '撤回する', sentence: '発言[はつげん]を**撤回**[てっかい]する。', trans: '撤回發言。' },
       masu: { word: '撤回します', sentence: '（不常用）', trans: '（撤回）' },
       te: { word: '撤回して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '撤回しない', sentence: '（不常用）', trans: '（不撤回）' },
@@ -4265,13 +4316,47 @@ export const VERB_DATA = [
     group: 'Irregular (不規則)',
     level: 'N1',
     forms: {
-      dictionary: { word: '究明する', sentence: '真相[しんそう]を究明[きゅうめい]する。', trans: '究明真相。' },
+      dictionary: { word: '究明する', sentence: '真相[しんそう]を**究明**[きゅうめい]する。', trans: '究明真相。' },
       masu: { word: '究明します', sentence: '（不常用）', trans: '（究明）' },
       te: { word: '究明して', sentence: '（不常用）', trans: '（不常用）' },
       nai: { word: '究明しない', sentence: '（不常用）', trans: '（不究明）' },
       ta: { word: '究明した', sentence: '原因[げんいん]を究明[きゅうめい]した。', trans: '究明了原因。' },
       potential: { word: '究明できる', sentence: '（不常用）', trans: '（能究明）' },
       volitional: { word: '究明しよう', sentence: '（不常用）', trans: '（究明吧）' }
+    }
+  },
+  {
+    id: 'acknowledge',
+    kanji: '認識する',
+    hiragana: 'にんしきする',
+    meaning: '認知（N2複習，強調正式認知）',
+    group: 'Irregular (不規則)',
+    level: 'N1',
+    forms: {
+      dictionary: { word: '認識する', sentence: '（N2第一批已解釋，略）', trans: '認知。' },
+      masu: { word: '認識します', sentence: '（N2第一批已解釋，略）', trans: '（認知）' },
+      te: { word: '認識して', sentence: '（N2第一批已解釋，略）', trans: '（認知後）' },
+      nai: { word: '認識しない', sentence: '（N2第一批已解釋，略）', trans: '（不認知）' },
+      ta: { word: '認識した', sentence: '（N2第一批已解釋，略）', trans: '（認知了）' },
+      potential: { word: '認識できる', sentence: '（N2第一批已解釋，略）', trans: '（能認知）' },
+      volitional: { word: '認識しよう', sentence: '（不常用）', trans: '（不常用）' }
+    }
+  },
+  {
+    id: 'concentrate_deep',
+    kanji: '専念する',
+    hiragana: 'せんねんする',
+    meaning: '專心致力（N2複習，強調完全投入）',
+    group: 'Irregular (不規則)',
+    level: 'N1',
+    forms: {
+      dictionary: { word: '専念する', sentence: '（N2第一批已解釋，略）', trans: '專心致力。' },
+      masu: { word: '専念します', sentence: '（N2第一批已解釋，略）', trans: '（專心）' },
+      te: { word: '専念して', sentence: '（N2第一批已解釋，略）', trans: '（專心後）' },
+      nai: { word: '専念しない', sentence: '（N2第一批已解釋，略）', trans: '（不專心）' },
+      ta: { word: '専念した', sentence: '（N2第一批已解釋，略）', trans: '（專心了）' },
+      potential: { word: '専念できる', sentence: '（N2第一批已解釋，略）', trans: '（能專心）' },
+      volitional: { word: '専念しよう', sentence: '（不常用）', trans: '（不常用）' }
     }
   }
 ]
