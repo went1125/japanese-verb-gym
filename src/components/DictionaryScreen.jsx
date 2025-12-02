@@ -1,8 +1,45 @@
-import React, { useState } from 'react';
-import { ChevronRight, Star, Tag, BookOpen, Layers, Heart, Plus, Filter, Lock, Crown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronRight, Star, Tag, BookOpen, Layers, Heart, Plus, Filter, Lock, Crown, Volume2 } from 'lucide-react';
 import { VERB_DATA } from '../data/verbs.js'; 
 
-// --- Furigana Renderer (保持不變) ---
+// --- Helper: 清除振假名標記 ---
+const stripFurigana = (text) => {
+  if (!text) return '';
+  return text.replace(/\[[^\]]+\]/g, '');
+};
+
+// --- Helper: 播放語音 (修正 iOS 中文問題) ---
+const speak = (text) => {
+  if (!window.speechSynthesis) {
+    return;
+  }
+  
+  // 1. 停止當前語音
+  window.speechSynthesis.cancel();
+
+  const cleanText = stripFurigana(text);
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  
+  // 2. 獲取所有可用聲音
+  let voices = window.speechSynthesis.getVoices();
+  
+  // 3. 針對 iOS 的特殊處理：如果 voices 為空，嘗試非同步等待 (但在點擊事件中通常已有聲音)
+  // 強制尋找日語聲音
+  const jaVoice = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang.includes('ja'));
+
+  // 4. 明確指定聲音物件 (關鍵步驟！)
+  if (jaVoice) {
+    utterance.voice = jaVoice;
+  }
+
+  // 5. 設定語言與語速
+  utterance.lang = 'ja-JP'; 
+  utterance.rate = 0.9;     
+  
+  window.speechSynthesis.speak(utterance);
+};
+
+// --- Furigana Renderer ---
 const FuriganaText = ({ text }) => {
   if (!text) return null;
   const regex = /([\u4e00-\u9faf\u3005]+)\[([^\]]+)\]/g;
@@ -29,15 +66,37 @@ const FuriganaText = ({ text }) => {
   return <span>{result}</span>;
 };
 
+// --- FormRow 組件 ---
 function FormRow({ label, data }) {
   return (
     <div className="text-sm bg-slate-900 rounded-lg p-3 border border-slate-800">
-      <div className="flex items-baseline gap-2 mb-1">
+      {/* 單字行 */}
+      <div className="flex items-center gap-2 mb-2">
         <span className="text-slate-500 w-24 text-xs font-bold uppercase shrink-0">{label}</span>
         <span className="text-indigo-400 font-extrabold text-lg">{data.word}</span>
+        <button 
+          onClick={(e) => { e.stopPropagation(); speak(data.word); }}
+          className="p-1.5 text-slate-500 hover:text-indigo-400 hover:bg-slate-800 rounded-full transition-colors"
+          title="播放單字發音"
+        >
+          <Volume2 size={16} />
+        </button>
       </div>
-      <div className="pl-24 text-slate-300 text-base italic border-l border-slate-700/50 leading-relaxed">
-        <FuriganaText text={data.sentence} />
+
+      {/* 例句區塊 */}
+      <div className="pl-24 border-l border-slate-700/50">
+        <div className="flex items-start justify-between gap-2">
+            <div className="text-slate-300 text-base italic leading-relaxed">
+               <FuriganaText text={data.sentence} />
+            </div>
+            <button 
+              onClick={(e) => { e.stopPropagation(); speak(data.sentence); }}
+              className="mt-0.5 p-1.5 text-slate-500 hover:text-indigo-400 hover:bg-slate-800 rounded-full transition-colors shrink-0"
+              title="播放例句發音"
+            >
+              <Volume2 size={16} />
+            </button>
+        </div>
         <p className='text-xs text-slate-500 mt-1 not-italic'>({data.trans})</p>
       </div>
     </div>
@@ -51,11 +110,20 @@ export default function DictionaryScreen({
   const [filter, setFilter] = useState('');
   const [showForms, setShowForms] = useState({});
   const [activeTab, setActiveTab] = useState('all'); 
-  const [showPaywall, setShowPaywall] = useState(false); // 控制等級鎖付費牆
+  const [showPaywall, setShowPaywall] = useState(false); 
 
   const ALL_LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
 
-  // 處理等級篩選切換 (含上鎖邏輯)
+  // 確保語音列表在頁面載入時就準備好 (針對某些瀏覽器的非同步加載)
+  useEffect(() => {
+    const loadVoices = () => {
+        window.speechSynthesis.getVoices();
+    };
+    loadVoices();
+    // 某些瀏覽器需要監聽這個事件才能確保獲取到聲音列表
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+  }, []);
+
   const toggleLevel = (level) => {
     if (level !== 'N5' && !isPro) {
         setShowPaywall(true);
@@ -70,15 +138,9 @@ export default function DictionaryScreen({
     }
   };
 
-  // Filter Logic
   const filteredData = VERB_DATA.filter(v => {
-    // 1. Tab Filter
     if (activeTab === 'favorites' && !favorites[v.id]) return false;
-    
-    // 2. Level Filter (新增)
     if (selectedLevels && !selectedLevels.includes(v.level)) return false;
-
-    // 3. Keyword Filter
     if (!filter) return true;
     return (
       v.kanji.includes(filter) || 
@@ -133,7 +195,7 @@ export default function DictionaryScreen({
             </button>
         </div>
 
-        {/* --- Level Filter (與 Menu 樣式一致) --- */}
+        {/* --- Level Filter --- */}
         <div className="flex gap-2 mb-3 overflow-x-auto no-scrollbar pb-1">
             {ALL_LEVELS.map(level => {
                 const isActive = selectedLevels.includes(level);
@@ -198,9 +260,18 @@ export default function DictionaryScreen({
         ) : (
             filteredData.map((verb) => (
                 <div key={verb.id} className="bg-slate-800 rounded-xl p-5 border border-slate-700 shadow-lg">
+                    {/* Header: 單字與主要喇叭按鈕 */}
                     <div className="flex justify-between items-start mb-3">
                         <div>
-                            <p className="text-4xl font-extrabold text-indigo-400 mb-1">{verb.kanji} <span className="text-xl text-slate-500">({verb.hiragana})</span></p>
+                            <div className="flex items-center gap-3">
+                                <p className="text-4xl font-extrabold text-indigo-400 mb-1">{verb.kanji} <span className="text-xl text-slate-500">({verb.hiragana})</span></p>
+                                <button 
+                                  onClick={(e) => { e.stopPropagation(); speak(verb.forms.dictionary.word); }}
+                                  className="p-2 bg-slate-700 hover:bg-indigo-600 rounded-full text-white transition-colors shadow-md"
+                                >
+                                  <Volume2 size={20} />
+                                </button>
+                            </div>
                             <p className="text-lg font-medium text-white flex items-center gap-2">
                                 <Tag size={18} className='text-slate-500'/> {verb.meaning}
                             </p>
@@ -242,7 +313,7 @@ export default function DictionaryScreen({
         )}
       </div>
 
-      {/* Paywall Modal (等級鎖定) */}
+      {/* Paywall Modal */}
       {showPaywall && (
           <div className="absolute inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
               <div className="bg-slate-900 w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 border-t sm:border border-slate-700 shadow-2xl">
