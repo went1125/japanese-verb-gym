@@ -1,6 +1,6 @@
 // src/App.jsx
 import React, { useState, useEffect, useCallback } from 'react';
-import { Crown, Video, Zap, BatteryCharging } from 'lucide-react';
+import { Video, Zap, BatteryCharging, X } from 'lucide-react';
 
 import MenuScreen from './components/MenuScreen';
 import QuizScreen from './components/QuizScreen';
@@ -9,10 +9,9 @@ import DictionaryScreen from './components/DictionaryScreen';
 import MistakeScreen from './components/MistakeScreen';
 import { initializeFirebase } from './services/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
-// 核心修正：引入 deleteField
 import { doc, setDoc, onSnapshot, deleteField } from 'firebase/firestore'; 
 
-// 模擬廣告組件
+// --- 模擬激勵廣告 (Rewarded Ad) ---
 const MockAdOverlay = ({ onReward, onClose }) => {
   const [timer, setTimer] = useState(5);
   const [canClose, setCanClose] = useState(false);
@@ -39,10 +38,23 @@ const MockAdOverlay = ({ onReward, onClose }) => {
         <div className="text-center space-y-4">
             <Video size={64} className="mx-auto text-yellow-400 animate-bounce" />
             <h2 className="text-2xl font-bold">廣告播放中...</h2>
-            <p className="text-slate-400 text-sm">模擬廣告</p>
+            <p className="text-slate-400 text-sm">這是模擬廣告 (AdMob)</p>
         </div>
     </div>
   );
+};
+
+// --- 新增：模擬底部橫幅廣告 (Banner Ad) ---
+const BottomBannerAd = () => {
+    // 實際上線時，這裡會放 AdMob 的 Banner Component
+    return (
+        <div className="w-full h-[60px] bg-slate-800 border-t border-slate-700 flex items-center justify-center relative shrink-0">
+            <div className="text-slate-500 text-xs font-mono tracking-widest flex items-center gap-2">
+                <span className="bg-slate-700 px-1 rounded">AD</span>
+                Google AdMob Banner Area
+            </div>
+        </div>
+    );
 };
 
 export default function App() {
@@ -50,8 +62,7 @@ export default function App() {
   const [selectedMode, setSelectedMode] = useState(null);
   const [finalScore, setFinalScore] = useState(0);
 
-  // 商業與篩選
-  const [isPro, setIsPro] = useState(false); 
+  // 篩選狀態 (全開放，但無 Pro 狀態)
   const [selectedLevels, setSelectedLevels] = useState(['N5']); 
   
   // 體力與集點系統
@@ -63,6 +74,7 @@ export default function App() {
   const [showCreditModal, setShowCreditModal] = useState(false); 
   const [maxFavorites, setMaxFavorites] = useState(10); 
   const [showLimitModal, setShowLimitModal] = useState(false); 
+  const [adType, setAdType] = useState(null); // 'credit' | 'slot' 用來區分廣告獎勵類型
 
   // Firestore
   const [firebaseServices, setFirebaseServices] = useState({ db: null, auth: null, appId: null });
@@ -95,12 +107,11 @@ export default function App() {
               const data = docSnap.data();
               setFavorites(data.verbs || {});
               setMistakes(data.mistakes || {});
-              if (data.isPro) setIsPro(true);
               setCredits(data.credits !== undefined ? data.credits : 3);
               setPoints(data.points || 0); 
               if (data.maxFavorites) setMaxFavorites(data.maxFavorites);
           } else {
-              setFavorites({}); setMistakes({}); setCredits(3); setPoints(0); setIsPro(false); setMaxFavorites(10);
+              setFavorites({}); setMistakes({}); setCredits(3); setPoints(0); setMaxFavorites(10);
           }
       }, (error) => console.error("Error listening to user data:", error));
       return () => unsub();
@@ -113,79 +124,62 @@ export default function App() {
     try { await setDoc(userRef, newData, { merge: true }); } catch (error) { console.error("Failed to update data:", error); }
   }, [firebaseServices.db, userId, firebaseServices.appId]);
 
-  // 4. 收藏切換 (核心修正：使用 deleteField 並只傳送單一異動)
+  // Actions
   const toggleFavorite = (verbId) => {
       const isAdding = !favorites[verbId];
-      if (isAdding && !isPro && Object.keys(favorites).length >= maxFavorites) {
+      // 永遠檢查上限 (因為沒有 Pro 了)
+      if (isAdding && Object.keys(favorites).length >= maxFavorites) {
           setShowLimitModal(true); return; 
       }
-      
-      // 只傳送要修改的那一個 key，刪除時使用 deleteField()
-      updateUserData({ 
-          verbs: {
-              [verbId]: isAdding ? true : deleteField()
-          }
-      });
+      updateUserData({ verbs: { [verbId]: isAdding ? true : deleteField() } });
   };
 
-  // 5. 錯題切換 (核心修正：使用 deleteField 並只傳送單一異動)
   const toggleMistake = (verbId) => {
       const isAdding = !mistakes[verbId];
-      
-      updateUserData({ 
-          mistakes: {
-              [verbId]: isAdding ? true : deleteField()
-          }
-      });
+      updateUserData({ mistakes: { [verbId]: isAdding ? true : deleteField() } });
   };
 
   const handleStartQuiz = (mode) => {
-      if (isPro) {
-          setSelectedMode(mode); setScreen('quiz'); return;
-      }
       if (credits > 0) {
-          updateUserData({ credits: credits - 1 }); // 入場扣體力
+          updateUserData({ credits: credits - 1 }); 
           setSelectedMode(mode); setScreen('quiz');
       } else {
           setShowCreditModal(true);
       }
   };
 
-  // 訓練完成：只加積分
   const handleQuizFinish = (score) => {
       setFinalScore(score);
       setScreen('summary');
       updateUserData({ points: points + 1 });
   };
 
-  // 手動兌換積分
   const handleRedeemPoints = () => {
       if (points >= 5) {
-          updateUserData({ 
-              points: points - 5, 
-              credits: credits + 1 
-          });
+          updateUserData({ points: points - 5, credits: credits + 1 });
           alert("兌換成功！體力 +1");
       } else {
           alert("積分不足 5 點");
       }
   };
 
-  const handleAdReward = () => {
-      updateUserData({ credits: credits + 1 });
-      alert(`獲得 1 次訓練機會！`);
+  // 統一處理廣告獎勵
+  const handleAdComplete = () => {
+      if (adType === 'credit') {
+          updateUserData({ credits: credits + 1 });
+          alert(`獲得 1 次訓練機會！`);
+      } else if (adType === 'slot') {
+          updateUserData({ maxFavorites: maxFavorites + 5 });
+          alert("收藏空間已擴充 +5！");
+      }
+      setAdType(null);
   };
 
-  const handleWatchAdForSlots = () => {
-      updateUserData({ maxFavorites: maxFavorites + 5 });
+  const triggerAd = (type) => {
+      setAdType(type);
+      setShowCreditModal(false);
       setShowLimitModal(false);
-      alert("收藏空間已擴充 +5！");
-  };
-
-  const handleUpgrade = () => {
-      updateUserData({ isPro: true });
-      alert("升級成功！");
-      setShowCreditModal(false); setShowLimitModal(false);
+      setShowAdOverlay(true);
   };
 
   const renderScreen = () => {
@@ -196,7 +190,7 @@ export default function App() {
         onStart={handleStartQuiz} 
         onDict={() => setScreen('dictionary')}
         onMistakes={() => setScreen('mistakes')} 
-        userId={userId} isPro={isPro} 
+        userId={userId} 
         credits={credits} points={points} 
         onAddCredit={() => setShowCreditModal(true)} 
         onRedeem={handleRedeemPoints} 
@@ -218,39 +212,50 @@ export default function App() {
       />;
       case 'dictionary': return <DictionaryScreen 
         onBack={() => setScreen('menu')} favorites={favorites} toggleFavorite={toggleFavorite} 
-        isPro={isPro} maxFavorites={maxFavorites} onWatchAdForSlots={() => { setShowLimitModal(false); setShowAdOverlay(true); }}
-        selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} onUpgrade={handleUpgrade}
+        maxFavorites={maxFavorites} 
+        onWatchAdForSlots={() => triggerAd('slot')}
+        selectedLevels={selectedLevels} setSelectedLevels={setSelectedLevels} 
       />;
       default: return <MenuScreen />;
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white overflow-hidden">
-      <div className="max-w-md mx-auto min-h-screen relative shadow-2xl bg-slate-900 border-x border-slate-800">
-        {renderScreen()}
-        {showAdOverlay && <MockAdOverlay onReward={() => { if (showLimitModal) handleWatchAdForSlots(); else handleAdReward(); }} onClose={() => setShowAdOverlay(false)} />}
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-500 selection:text-white overflow-hidden flex flex-col">
+      <div className="max-w-md mx-auto w-full flex-1 relative shadow-2xl bg-slate-900 border-x border-slate-800 flex flex-col">
+        {/* 主要內容區 */}
+        <div className="flex-1 relative overflow-hidden">
+            {renderScreen()}
+        </div>
+
+        {/* 底部 Banner 廣告 (全域顯示) */}
+        <BottomBannerAd />
+        
+        {/* 全螢幕覆蓋層 */}
+        {showAdOverlay && <MockAdOverlay onReward={handleAdComplete} onClose={() => setShowAdOverlay(false)} />}
+        
         {showCreditModal && (
             <div className="absolute inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-              <div className="bg-slate-900 w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 border-t sm:border border-slate-700 shadow-2xl">
+              <div className="bg-slate-900 w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 border-t sm:border border-slate-700 shadow-2xl pb-20"> {/* pb-20 for banner */}
                   <div className="flex justify-center mb-4"><div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center"><BatteryCharging size={32} className="text-red-500" /></div></div>
                   <h2 className="text-2xl font-black text-white text-center mb-2">訓練次數不足</h2>
-                  <div className="space-y-3 mt-6">
-                      <button onClick={() => { setShowCreditModal(false); setShowAdOverlay(true); }} className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Video size={20}/> 看廣告 (+1 次)</button>
-                      <button onClick={handleUpgrade} className="w-full py-3 bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Crown size={20} className="fill-white"/> 升級 PRO (無限)</button>
-                      <button onClick={() => setShowCreditModal(false)} className="w-full py-2 text-slate-500 text-sm font-medium hover:text-white">取消</button>
+                  <p className="text-slate-400 text-center mb-6 text-sm">您的體力已用盡。<br/>看廣告立即恢復，繼續特訓！</p>
+                  <div className="space-y-3">
+                      <button onClick={() => triggerAd('credit')} className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Video size={20}/> 看廣告 (+1 次)</button>
+                      <button onClick={() => setShowCreditModal(false)} className="w-full py-2 text-slate-500 text-sm font-medium hover:text-white">稍後再說</button>
                   </div>
               </div>
             </div>
         )}
+        
         {showLimitModal && (
              <div className="absolute inset-0 z-[60] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-             <div className="bg-slate-900 w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 border-t sm:border border-slate-700 shadow-2xl">
+             <div className="bg-slate-900 w-full max-w-sm rounded-t-3xl sm:rounded-3xl p-6 border-t sm:border border-slate-700 shadow-2xl pb-20">
                  <div className="flex justify-center mb-4"><div className="w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center"><Zap size={32} className="text-indigo-400 fill-indigo-400" /></div></div>
                  <h2 className="text-2xl font-black text-white text-center mb-2">收藏空間已滿</h2>
-                 <div className="space-y-3 mt-6">
-                     <button onClick={handleUpgrade} className="w-full py-3 bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Crown size={20} className="fill-white"/> 升級 PRO (無限)</button>
-                     <button onClick={() => { setShowAdOverlay(true); }} className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Video size={20}/> 看廣告 (+5格)</button>
+                 <p className="text-slate-400 text-center mb-6 text-sm">您目前的空間 ({maxFavorites}格) 已用完。<br/>看廣告可永久擴充空間！</p>
+                 <div className="space-y-3">
+                     <button onClick={() => triggerAd('slot')} className="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"><Video size={20}/> 看廣告 (+5格 永久空間)</button>
                      <button onClick={() => setShowLimitModal(false)} className="w-full py-2 text-slate-500 text-sm font-medium hover:text-white">取消</button>
                  </div>
              </div>

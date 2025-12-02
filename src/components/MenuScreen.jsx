@@ -1,11 +1,11 @@
 // src/components/MenuScreen.jsx
 import React from 'react';
-import { Dumbbell, BookOpen, ChevronRight, Crown, Filter, Plus, AlertCircle, Zap } from 'lucide-react';
+import { Dumbbell, BookOpen, ChevronRight, Filter, Plus, AlertCircle, Zap, Gift } from 'lucide-react';
 import { MODES } from '../constants/modes.jsx'; 
 
 export default function MenuScreen({ 
-  onStart, onDict, onMistakes, // 新增 onMistakes
-  isPro, credits, onAddCredit, trainCount,
+  onStart, onDict, onMistakes, 
+  credits, points, onAddCredit, onRedeem, 
   selectedLevels, setSelectedLevels 
 }) {
   const ALL_LEVELS = ['N5', 'N4', 'N3', 'N2', 'N1'];
@@ -16,70 +16,65 @@ export default function MenuScreen({
     } else { setSelectedLevels(prev => [...prev, level]); }
   };
 
-  // 計算集點進度 (0~4)
-  const progress = trainCount % 5;
+  const canRedeem = points >= 5;
+  const progress = points % 5; // 顯示 0~4
 
   return (
-    <div className="p-6 flex flex-col h-screen relative">
+    <div className="p-6 flex flex-col h-full relative"> {/* h-full 配合 App.jsx 的 layout */}
       <header className="mb-6 mt-4 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-black tracking-tighter italic flex items-center gap-2">
             <Dumbbell className="text-indigo-500 fill-indigo-500" />
             VERB GYM
           </h1>
-          <div className="flex items-center gap-2">
-             <p className="text-slate-500 text-sm font-medium pl-1">Daily Workout</p>
-             {isPro && <span className="bg-yellow-500/20 text-yellow-500 text-xs px-2 py-0.5 rounded font-bold border border-yellow-500/50">PRO</span>}
-          </div>
+          <p className="text-slate-500 text-sm font-medium pl-1">Daily Workout</p>
         </div>
         <div className='flex items-center gap-2'>
             <button onClick={onDict} className="p-3 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors text-slate-400 hover:text-white">
               <BookOpen size={20} />
             </button>
-            {/* 錯題本入口 */}
-            <button onClick={onMistakes} className="p-3 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors text-slate-400 hover:text-red-400">
+            <button onClick={onMistakes} className="p-3 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors text-slate-400 hover:text-red-400 relative">
               <AlertCircle size={20} />
             </button>
         </div>
       </header>
 
-      {/* 體力與集點區塊 */}
+      {/* 體力與積分區塊 */}
       <div className="mb-6 bg-slate-800 p-4 rounded-2xl border border-slate-700">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-4 border-b border-slate-700/50 pb-3">
               <div>
-                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">
-                      訓練體力
-                  </p>
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">訓練體力</p>
                   <div className="flex items-baseline gap-1">
-                      {isPro ? (
-                          <span className="text-2xl font-black text-yellow-500 flex items-center gap-2"><Crown size={24} className="fill-yellow-500"/> 無限</span>
-                      ) : (
-                          <span className={`text-3xl font-black ${credits > 0 ? 'text-white' : 'text-red-500'}`}>{credits}</span>
-                      )}
-                      {!isPro && <span className="text-slate-500 text-sm">/ 次</span>}
+                      <span className={`text-3xl font-black ${credits > 0 ? 'text-white' : 'text-red-500'}`}>{credits}</span>
+                      <span className="text-slate-500 text-sm">/ 次</span>
                   </div>
               </div>
-              {!isPro && (
-                  <button onClick={onAddCredit} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/20 flex items-center gap-1 active:scale-95 transition-transform">
-                      <Plus size={16} /> 補充
-                  </button>
-              )}
+              <button onClick={onAddCredit} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/20 flex items-center gap-1 active:scale-95 transition-transform">
+                  <Plus size={16} /> 補充
+              </button>
           </div>
           
-          {/* 集點進度條 (買5送1) */}
-          {!isPro && (
-              <div className="bg-slate-900/50 rounded-lg p-2 flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-xs text-slate-400 font-bold">
+          <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2 text-xs text-slate-400 font-bold uppercase tracking-wider">
                       <Zap size={14} className="text-yellow-500 fill-yellow-500"/>
-                      集滿 5 次送 1 次
+                      訓練集點 (5點換1次)
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1.5 mt-1">
                       {[...Array(5)].map((_, i) => (
-                          <div key={i} className={`w-6 h-2 rounded-full transition-all ${i < progress ? 'bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.5)]' : 'bg-slate-700'}`}></div>
+                          <div key={i} className={`w-3 h-3 rounded-full transition-all ${i < progress ? 'bg-yellow-500 shadow-[0_0_5px_rgba(234,179,8,0.8)]' : 'bg-slate-700'}`}></div>
                       ))}
+                      {points > 5 && <span className="text-xs text-yellow-500 font-bold">+{points - 5}</span>}
                   </div>
               </div>
-          )}
+              <button 
+                onClick={onRedeem}
+                disabled={!canRedeem}
+                className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1 transition-all ${canRedeem ? 'bg-yellow-500 text-black shadow-lg shadow-yellow-500/20 hover:bg-yellow-400 active:scale-95 cursor-pointer animate-pulse' : 'bg-slate-700 text-slate-500 cursor-not-allowed opacity-50'}`}
+              >
+                  <Gift size={14} /> 兌換
+              </button>
+          </div>
       </div>
 
       {/* 等級篩選器 */}
