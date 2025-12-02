@@ -1,6 +1,6 @@
 // src/components/SummaryScreen.jsx
 import React from 'react';
-import { Trophy, Zap, RotateCcw } from 'lucide-react';
+import { Trophy, RotateCcw } from 'lucide-react';
 
 export default function SummaryScreen({ score, mode, onHome, onRetry }) {
   return (
@@ -17,16 +17,6 @@ export default function SummaryScreen({ score, mode, onHome, onRetry }) {
         <p className="text-7xl font-black text-white">{score}</p>
       </div>
       
-      <div className="bg-indigo-900/40 border border-indigo-700 w-full rounded-xl p-4 mb-8">
-        <p className="text-sm font-semibold text-indigo-300 flex items-center gap-2 justify-center">
-            <Zap size={18} className='text-indigo-400 fill-indigo-400'/>
-            PRO 升級提醒
-        </p>
-        <p className="text-xs text-indigo-200 mt-1">
-            訂閱即可解鎖「錯題特訓菜單」，專門強化您這次訓練中的所有錯誤動詞！
-        </p>
-      </div>
-
       <div className="flex gap-4 w-full">
         <button onClick={onHome} className="flex-1 py-4 rounded-xl font-bold text-slate-400 bg-slate-800 hover:bg-slate-700 transition-colors">
           回主選單
