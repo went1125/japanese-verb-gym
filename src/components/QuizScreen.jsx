@@ -1,8 +1,71 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Timer, Trophy, Check, X, ArrowRight } from 'lucide-react';
-// 本地開發正確路徑
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { Timer, Trophy, Check, X, ArrowRight, Volume2 } from 'lucide-react';
 import { VERB_DATA } from '../data/verbs.js';
 import { MODES } from '../constants/modes.jsx';
+
+// --- 語音引擎 (與 DictionaryScreen 共用邏輯) ---
+const stripFurigana = (text) => {
+  if (!text) return '';
+  return text.replace(/\[[^\]]+\]/g, '');
+};
+
+const speak = (text) => {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel(); // 停止上一句
+
+  const cleanText = stripFurigana(text);
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  
+  // iOS Safari 語音修正邏輯
+  let voices = window.speechSynthesis.getVoices();
+  const jaVoice = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang.includes('ja'));
+  if (jaVoice) utterance.voice = jaVoice;
+
+  utterance.lang = 'ja-JP'; 
+  utterance.rate = 0.9;     
+  window.speechSynthesis.speak(utterance);
+};
+
+// --- 振假名顯示組件 ---
+const FuriganaText = ({ text }) => {
+  if (!text) return null;
+  const regex = /([\u4e00-\u9faf\u3005]+)\[([^\]]+)\]/g;
+  let match;
+  let lastIndex = 0;
+  let result = [];
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      result.push(<span key={`text-${lastIndex}`}>{text.substring(lastIndex, match.index)}</span>);
+    }
+    result.push(
+      <ruby key={`ruby-${match.index}`} className="mx-0.5 font-medium group">
+        {match[1]}
+        <rt className="text-[0.6em] text-indigo-300 font-normal select-none opacity-80">
+          {match[2]}
+        </rt>
+      </ruby>
+    );
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) {
+    result.push(<span key={`end-${lastIndex}`}>{text.substring(lastIndex)}</span>);
+  }
+  return <span>{result}</span>;
+};
+
+// --- 核心演算法：平假名五段變換表 ---
+// 用於將動詞結尾 (u段) 轉換為其他段，製造混淆選項
+const HIRAGANA_CHART = {
+  'u': { a: 'わ', i: 'い', u: 'う', e: 'え', o: 'お', te: 'って', ta: 'った' },
+  'ku': { a: 'か', i: 'き', u: 'く', e: 'け', o: 'こ', te: 'いて', ta: 'いた' },
+  'gu': { a: 'が', i: 'ぎ', u: 'ぐ', e: 'げ', o: 'ご', te: 'いで', ta: 'いだ' },
+  'su': { a: 'さ', i: 'し', u: 'す', e: 'せ', o: 'そ', te: 'して', ta: 'した' },
+  'tsu': { a: 'た', i: 'ち', u: 'つ', e: 'て', o: 'と', te: 'って', ta: 'った' },
+  'nu': { a: 'な', i: 'に', u: 'ぬ', e: 'ね', o: 'の', te: 'んで', ta: 'んだ' },
+  'bu': { a: 'ば', i: 'び', u: 'ぶ', e: 'べ', o: 'ぼ', te: 'んで', ta: 'んだ' },
+  'mu': { a: 'ま', i: 'み', u: 'む', e: 'め', o: 'も', te: 'んで', ta: 'んだ' },
+  'ru': { a: 'ら', i: 'り', u: 'る', e: 'れ', o: 'ろ', te: 'って', ta: 'った' }, // 五段的 ru
+};
 
 export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFavorite, selectedLevels }) {
   const [qIndex, setQIndex] = useState(0);
@@ -12,59 +75,161 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
   const [showResult, setShowResult] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10);
   
-  // 安全取得當前題目
+  // 用於第一次載入語音 (解決 iOS 首次靜音問題)
+  useEffect(() => {
+    window.speechSynthesis.getVoices();
+  }, []);
+
   const currentQ = questions[qIndex] || {}; 
 
-  // --- 1. 干擾項生成邏輯 ---
-  const generateDistractors = useCallback((verb, targetKey) => {
-    const distractors = new Set();
+  // --- 1. 高難度干擾項生成器 (核心邏輯) ---
+  const generateHardDistractors = useCallback((verb, targetKey) => {
     const correctWord = verb.forms[targetKey].word;
+    const dictWord = verb.forms.dictionary.word;
+    const fakeSet = new Set();
 
-    // 策略 A: 同動詞的其他變化形 (高混淆度)
-    const sameVerbOtherForms = Object.keys(verb.forms)
-        .filter(k => k !== targetKey && k !== 'dictionary')
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 2)
-        .map(k => verb.forms[k].word);
+    // 取得動詞結尾 (最後一個字)
+    const lastChar = dictWord.slice(-1);
+    const stem = dictWord.slice(0, -1);
 
-    sameVerbOtherForms.forEach(f => distractors.add(f));
+    // 判斷動詞類型
+    const isIchidan = verb.group.includes('Ru-Verb') || verb.group.includes('二類');
+    const isGodan = verb.group.includes('U-Verb') || verb.group.includes('一類');
+    const isIrregular = verb.group.includes('Irregular') || verb.group.includes('不規則');
 
-    // 策略 B: 隨機其他動詞的相同變化形 (跨單字干擾)
-    const otherVerbs = VERB_DATA.filter(v => v.id !== verb.id);
-    if (otherVerbs.length > 0) {
-        const otherVerb = otherVerbs[Math.floor(Math.random() * otherVerbs.length)];
-        const otherForm = otherVerb.forms[targetKey]?.word;
-        if (otherForm) distractors.add(otherForm);
+    // ----------------------------------------------------
+    // A. 針對 [ます形] (Masu) 的混淆
+    // ----------------------------------------------------
+    if (targetKey === 'masu') {
+        const suffix = 'ます';
+        if (isGodan) {
+            // 五段正確: i段 + masu (例: ikimasu)
+            // 混淆: a段, u段, e段, o段 + masu (例: ikamasu, ikumasu...)
+            const row = HIRAGANA_CHART[lastChar] || HIRAGANA_CHART['u']; // fallback
+            fakeSet.add(stem + row.a + suffix);
+            fakeSet.add(stem + row.u + suffix);
+            fakeSet.add(stem + row.e + suffix);
+            fakeSet.add(stem + row.o + suffix);
+        } else if (isIchidan) {
+            // 一段正確: 去ru + masu (例: tabemasu)
+            // 混淆: 保留ru (taberumasu), 變godan變法 (tabimasu)
+            fakeSet.add(stem + 'る' + suffix); // taberumasu
+            fakeSet.add(stem + 'り' + suffix); // tabimasu (偽裝成五段)
+        }
     }
 
-    // 策略 C: 填充項 (防止選項不足)
-    while (distractors.size < 3) {
+    // ----------------------------------------------------
+    // B. 針對 [ない形] (Nai) 的混淆
+    // ----------------------------------------------------
+    else if (targetKey === 'nai') {
+        const suffix = 'ない';
+        if (isGodan) {
+            // 五段正確: a段 + nai (例: ikanai)
+            // 混淆: i段, u段, e段 + nai
+            const row = HIRAGANA_CHART[lastChar] || HIRAGANA_CHART['u'];
+            fakeSet.add(stem + row.i + suffix); // ikinai
+            fakeSet.add(stem + row.u + suffix); // ikunai
+            fakeSet.add(stem + row.e + suffix); // ikenai (雖然可能是可能形否定，但在初級混淆很有效)
+        } else if (isIchidan) {
+            // 一段正確: 去ru + nai (例: tabenai)
+            // 混淆: taberunai, tabaranai
+            fakeSet.add(stem + 'る' + suffix); 
+            fakeSet.add(stem + 'ら' + suffix); // 偽裝成五段
+        }
+    }
+
+    // ----------------------------------------------------
+    // C. 針對 [て形/た形] (Te/Ta) 的音便混淆
+    // ----------------------------------------------------
+    else if (targetKey === 'te' || targetKey === 'ta') {
+        // 這邊我們要混淆「促音便」、「撥音便」、「イ音便」
+        // 例如: 正確是 yonde -> 混淆: yotte, yoite, yoshite
+        const endSuffix = targetKey === 'te' ? 'て' : 'た';
+        const deSuffix = targetKey === 'te' ? 'で' : 'だ';
+
+        const fakeEndings = [
+            stem + 'っ' + endSuffix, // tte/tta
+            stem + 'ん' + deSuffix,  // nde/nda
+            stem + 'い' + endSuffix, // ite/ita
+            stem + 'し' + endSuffix, // shite/shita
+            dictWord + endSuffix     // 字典形直接加 (iku-te)
+        ];
+
+        fakeEndings.forEach(f => {
+            if (f !== correctWord) fakeSet.add(f);
+        });
+    }
+
+    // ----------------------------------------------------
+    // D. 針對 [可能形/意向形] 的混淆
+    // ----------------------------------------------------
+    else if (targetKey === 'potential' || targetKey === 'volitional') {
+        if (isGodan) {
+            const row = HIRAGANA_CHART[lastChar] || HIRAGANA_CHART['u'];
+            // 混淆段位
+            if (targetKey === 'potential') { // 正確 e段+ru
+                fakeSet.add(stem + row.a + 'れる'); // 偽裝成被動/一段 (ikareru)
+                fakeSet.add(stem + row.i + 'える'); // (ikieru)
+            } else { // volitional 正確 o段+u
+                fakeSet.add(stem + row.a + 'よう'); // (ikayou)
+                fakeSet.add(stem + row.e + 'よう'); // (ikeyou)
+            }
+        } else if (isIchidan) {
+             if (targetKey === 'potential') {
+                 fakeSet.add(stem + 'れる'); // 拉拔詞 (tabereru - 少ra)
+                 fakeSet.add(stem + 'areru'); 
+             }
+        }
+    }
+
+    // 不規則動詞 (Irregular) 直接手動加一些常見錯誤
+    if (isIrregular) {
+        if (dictWord === '来る') {
+            fakeSet.add('来ない'); fakeSet.add('来ます'); // 混入其他形
+            fakeSet.add('きる'); fakeSet.add('こる'); // 亂改讀音的感覺
+        }
+        if (dictWord === 'する') {
+            fakeSet.add('しる'); fakeSet.add('すります');
+            fakeSet.add('すて'); fakeSet.add('さる');
+        }
+    }
+
+    // --- 填充策略 (如果混淆項不夠) ---
+    // 還是不夠的話，拿其他動詞的「正確變化形」來補，或者直接拿原形加後綴
+    while (fakeSet.size < 3) {
         const randomVerb = VERB_DATA[Math.floor(Math.random() * VERB_DATA.length)];
-        distractors.add(randomVerb.forms.dictionary.word + ' (原)'); 
+        // 確保不要拿正確答案
+        if (randomVerb.id !== verb.id) {
+             // 拿別的動詞的同一形 (跨單字干擾)
+             if (randomVerb.forms[targetKey]) {
+                 fakeSet.add(randomVerb.forms[targetKey].word);
+             }
+        } else {
+             // 拿同一動詞的其他形 (本單字干擾)
+             const forms = Object.values(verb.forms).map(f => f.word);
+             const randomForm = forms[Math.floor(Math.random() * forms.length)];
+             if (randomForm !== correctWord) fakeSet.add(randomForm);
+        }
+        
+        // 萬一還是不夠 (極端情況)，加個亂碼防止無窮迴圈
+        if (fakeSet.size < 3) fakeSet.add(dictWord + " (誤)");
     }
-    
-    // 過濾掉與正確答案相同的選項，並取前 3 個
-    const finalDistractors = Array.from(distractors).filter(d => d !== correctWord).slice(0, 3);
-    return finalDistractors;
+
+    // 轉回陣列並取前 3 個，過濾掉不小心產生成正確答案的
+    return Array.from(fakeSet).filter(w => w !== correctWord).slice(0, 3);
+
   }, []);
 
   // --- 2. 初始化題目 ---
   useEffect(() => {
-    const qCount = 5; // 每輪題數
+    const qCount = 5; 
     const generated = [];
     const allTargetKeys = MODES.filter(m => m.id !== 'mix').map(m => m.id);
 
-    // --- STEP A: 根據 Level 篩選單字池 ---
-    // verb.level 是 "N5", "N4" 等字串
-    // 如果 selectedLevels 為空或未定義，預設使用 N5 防呆
     const activeLevels = (selectedLevels && selectedLevels.length > 0) ? selectedLevels : ['N5'];
-    
     const levelFilteredVerbs = VERB_DATA.filter(v => activeLevels.includes(v.level));
-
-    // 防呆：如果篩選後沒有單字 (例如該等級資料庫還沒建)，則退回到全部
     const pool = levelFilteredVerbs.length > 0 ? levelFilteredVerbs : VERB_DATA;
 
-    // 簡單的隨機選題 (實際專案可改為從 user preferences 讀取權重)
     for (let i = 0; i < qCount; i++) {
       const verb = pool[Math.floor(Math.random() * pool.length)];
       let targetKey = mode.id;
@@ -73,11 +238,11 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
         targetKey = allTargetKeys[Math.floor(Math.random() * allTargetKeys.length)];
       }
 
-      // 防呆：確保該動詞有這個變化形
       if (!verb.forms[targetKey]) continue; 
 
       const correct = verb.forms[targetKey].word;
-      const distractors = generateDistractors(verb, targetKey);
+      // 使用新的高難度混淆生成器
+      const distractors = generateHardDistractors(verb, targetKey);
       const options = [correct, ...distractors].sort(() => 0.5 - Math.random());
 
       generated.push({
@@ -89,15 +254,14 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
       });
     }
     setQuestions(generated);
-  }, [mode, generateDistractors, selectedLevels]);
+  }, [mode, generateHardDistractors, selectedLevels]);
 
   // --- 3. 計時器邏輯 ---
   useEffect(() => {
-    // 如果顯示結果中、沒有題目、或尚未載入完成，則暫停計時
     if (showResult || !questions.length || !currentQ || !mode) return; 
     
     if (timeLeft <= 0) {
-      handleAnswer(null); // 超時視為答錯
+      handleAnswer(null); 
       return;
     }
 
@@ -105,37 +269,39 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
     return () => clearInterval(timer);
   }, [timeLeft, showResult, questions.length, qIndex, currentQ, mode]); 
 
-  // --- 4. 作答處理 ---
+  // --- 4. 作答處理 (新增自動語音) ---
   const handleAnswer = (option) => {
-    if (selectedOption !== null) return; // 防止重複點擊
+    if (selectedOption !== null) return; 
     setSelectedOption(option);
     setShowResult(true);
 
     const isCorrect = option === currentQ.correct;
     if (isCorrect) {
-      // 分數計算：基礎 10 分 + (剩餘秒數 * 2)
       setScore(prev => prev + 10 + Math.ceil(timeLeft * 2));
     }
+
+    // **優化 2: 作答後自動播放例句語音**
+    const sentence = currentQ.verb.forms[currentQ.targetKey].sentence;
+    speak(sentence);
   };
 
   // --- 5. 下一題/結算處理 ---
   const handleNextQuestion = () => {
     if (qIndex < questions.length - 1) {
-      // 還有下一題
       setQIndex(prev => prev + 1);
       setSelectedOption(null);
       setShowResult(false);
-      setTimeLeft(10); // 重置時間
+      setTimeLeft(10); 
+      // 停止語音，避免上一題的聲音干擾下一題思考
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
     } else {
-      // 最後一題，觸發結算
       onFinish(score);
     }
   };
 
-  // 載入中狀態
   if (questions.length === 0) return (
     <div className="flex items-center justify-center h-full text-slate-400">
-      <p className="animate-pulse">正在準備 {selectedLevels?.join(', ')} 程度的題目...</p>
+      <p className="animate-pulse">正在準備高難度特訓...</p>
     </div>
   );
 
@@ -189,11 +355,20 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
                   </div>
                 </div>
                 
-                {/* 例句區塊 */}
+                {/* 例句區塊 (新增語音按鈕) */}
                 <div className="bg-slate-900/80 rounded-xl p-4 border-l-4 border-indigo-500 mb-6">
-                  <p className="text-lg text-white font-medium mb-1">
-                    {targetFormInfo.sentence}
-                  </p>
+                  <div className="flex justify-between items-start gap-2">
+                      <div className="text-lg text-white font-medium mb-1 leading-relaxed">
+                        <FuriganaText text={targetFormInfo.sentence} />
+                      </div>
+                      <button 
+                        onClick={() => speak(targetFormInfo.sentence)}
+                        className="p-2 bg-slate-700 hover:bg-indigo-600 rounded-full text-white transition-colors shadow-md shrink-0"
+                        title="重聽發音"
+                      >
+                        <Volume2 size={20} />
+                      </button>
+                  </div>
                   <p className="text-sm text-slate-400">{targetFormInfo.trans}</p>
                 </div>
 
@@ -213,7 +388,6 @@ export default function QuizScreen({ mode, onFinish, onExit, favorites, toggleFa
               const isCorrect = opt === currentQ.correct;
               const isSelected = opt === selectedOption;
 
-              // 樣式邏輯：顯示結果時，正確答案亮綠色，錯誤選擇亮紅色
               let btnClass = "bg-slate-800 border-2 border-slate-700 text-slate-300 hover:border-indigo-500/50 hover:bg-slate-750";
               
               if (showResult) {
